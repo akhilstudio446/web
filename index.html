@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Akhil Studio 446 - Official</title>
+
+<meta property="og:title" content="The Akhil Studio 446 - Official">
+<meta property="og:description" content="Hey, I'm Akhil! Welcome to the world of instant entertainment. Play Snake Game & Join the Mission!">
+<meta property="og:image" content="https://yt3.googleusercontent.com/HDrEdu30w7xhUgEeY7Rix6WLLW2_Ejx_VOHoIergfyR5vuFhOcrtP2QqaC-1vSLmccwPNyGETBw=s160-c-k-c0x00ffffff-no-rj">
+
+<style>
+body {
+    background-color: #050505;
+    background-image: radial-gradient(circle at top left, rgba(255,0,0,0.3), transparent 50%),
+                      radial-gradient(circle at bottom right, rgba(0,243,255,0.2), transparent 50%),
+                      linear-gradient(to bottom, #101010, #000000);
+    color: white;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0; padding: 0; text-align: center;
+    overflow-x: hidden; position: relative;
+    padding-bottom: 50px;
+}
+
+.bg-anim { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-2; }
+.floater { position:absolute; font-size:24px; animation:floatUp 12s linear infinite; opacity:0.7; }
+@keyframes floatUp { 0%{transform:translateY(110vh) rotate(0deg);opacity:0;}50%{opacity:0.8;}100%{transform:translateY(-10vh) rotate(360deg);opacity:0;} }
+
+/* HEADER */
+header {
+    padding: 25px;
+    background: linear-gradient(135deg, #ff0000, #0000ff);
+    border-bottom:4px solid #ff3333;
+    box-shadow:0 0 30px rgba(255,0,0,0.6), 0 0 40px rgba(0,0,255,0.6);
+    position:relative; z-index:10;
+    border-radius:0 0 20px 20px;
+}
+.profile-pic { width:110px; height:110px; border-radius:50%; border:4px solid #00f3ff; box-shadow:0 0 20px #00f3ff; object-fit:cover; background:#000; }
+h1 { margin:10px 0 0 0; font-size:26px; text-transform:uppercase; letter-spacing:1px; color:white; text-shadow:0 0 15px #ff0000,0 0 20px #00f3ff; }
+h1 span { color:#ffd700; text-shadow:0 0 20px #00f3ff,0 0 25px #ff0000; }
+.music-btn { background:#111; color:#00f3ff; border:2px solid #00f3ff; padding:8px 20px; margin-top:15px; border-radius:30px; cursor:pointer; font-weight:bold; transition:0.3s; }
+.music-btn:hover { background:#00f3ff; color:#000; }
+
+/* RGB BOX & CARDS */
+.rgb-box {
+    position: relative; border-radius:12px; padding:20px; margin:25px auto; width:85%; max-width:600px; color:white;
+    background: rgba(0,0,0,0.8); overflow:hidden;
+}
+.rgb-box::before {
+    content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
+    background: linear-gradient(45deg, #ff0000,#ff00ff,#0000ff,#00ffff,#00ff00,#ffff00,#ff0000);
+    z-index:-2; animation: rotateRGB 4s linear infinite;
+}
+.rgb-box::after {
+    content:''; position:absolute; inset:4px; background:#080808; border-radius:10px; z-index:-1;
+}
+@keyframes rotateRGB { 100%{transform:rotate(360deg);} }
+
+.box-updates h3 { margin-top:0; color:#00f3ff; border-bottom:1px solid #00f3ff; padding-bottom:5px; text-align:left; }
+.box-updates li { color:#e0ffff; margin-bottom:8px; list-style-type:square; text-align:left; }
+
+/* ABOUT SECTION STYLES */
+.about-text { text-align: left; line-height: 1.6; color: #ddd; }
+.about-highlight { color: #ffd700; font-weight: bold; }
+
+/* BUTTONS */
+.subscribe-btn, .goto-btn { 
+    background:#ff0000; color:white; padding:12px 30px; font-weight:bold; border:none; 
+    border-radius:25px; margin-top:10px; cursor:pointer; font-size:16px; transition:0.3s; 
+    box-shadow:0 0 15px #ff0000, 0 0 25px #00f3ff; display: inline-block;
+}
+.subscribe-btn:hover, .goto-btn:hover { 
+    background: linear-gradient(45deg,#ff0000,#ff00ff,#0000ff,#00ffff,#00ff00,#ffff00); color:black; 
+}
+.copy-btn { background:#222; border:1px solid #ffd700; color:#ffd700; padding:15px; cursor:pointer; border-radius:5px; display:block; margin:0 auto; font-weight:bold; font-size:16px; }
+
+/* GAME STYLES */
+.game-wrapper { display:flex; flex-direction:column; align-items:center; justify-content:center; margin:40px 0; }
+.game-frame { border:4px solid #32cd32; padding:5px; background:#000; box-shadow:0 0 25px #32cd32; margin-bottom:15px; }
+canvas { background-color:#080808; display:block; }
+.mobile-controls { display:flex; justify-content:center; flex-wrap:wrap; margin-top:10px; gap:10px; }
+.mobile-btn { background:#32cd32; color:black; border:none; padding:10px 20px; font-weight:bold; border-radius:5px; cursor:pointer; user-select:none; }
+.start-btn { background:#ff0000; color:black; padding:10px 30px; font-weight:bold; border:none; border-radius:5px; cursor:pointer; margin-top:10px; }
+
+/* SHORTS GRID STYLES */
+.shorts-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+.short-frame {
+    width: 180px; 
+    height: 320px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid #333;
+    box-shadow: 0 0 10px rgba(0,243,255,0.2);
+    transition: transform 0.3s;
+}
+.short-frame:hover { transform: scale(1.05); border-color:#00f3ff; }
+.short-frame iframe { width: 100%; height: 100%; border: none; }
+
+.thank-you { font-size:22px; font-weight:bold; color:#ffd700; margin:20px 0; text-shadow:0 0 15px #00f3ff; }
+.site-footer { background-color: #0a0a0a; border-top: 1px solid #333; padding: 30px 10px; margin-top: 40px; font-size: 13px; color: #888; }
+.footer-links a { color: #aaa; text-decoration: none; margin: 0 10px; transition: 0.3s; }
+.footer-links a:hover { color: #00f3ff; }
+</style>
+</head>
+<body>
+
+<div class="bg-anim" id="animLayer"></div>
+
+<header>
+  <img src="https://yt3.googleusercontent.com/HDrEdu30w7xhUgEeY7Rix6WLLW2_Ejx_VOHoIergfyR5vuFhOcrtP2QqaC-1vSLmccwPNyGETBw=s160-c-k-c0x00ffffff-no-rj" alt="Akhil Studio Logo" class="profile-pic">
+  <br>
+  <h1>The Akhil Studio 446 <br><span>Official YouTube</span></h1>
+  <audio id="bgMusic"><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
+  <button class="music-btn" onclick="toggleMusic()">🎵 Play/Pause Music</button>
+</header>
+
+<div class="rgb-box" style="max-width:400px; text-align:center; margin:20px auto;">
+  <h3>🎬 Subscribe to Akhil Studio 446</h3>
+  <button class="subscribe-btn" onclick="window.open('https://www.youtube.com/@AkhilStudio446?sub_confirmation=1','_blank')">
+    👉 SUBSCRIBE
+  </button>
+
+  <div class="rgb-box" style="margin-top:15px; max-width:90%; padding:10px;">
+    <button class="goto-btn" onclick="window.open('https://www.youtube.com/@AkhilStudio446','_blank')">
+      🔗 Go to Akhil Studio 446 YouTube Channel
+    </button>
+  </div>
+</div>
+
+<div class="rgb-box" style="text-align: left;">
+  <h2 style="color:#ffd700; text-align:center; border-bottom:1px solid #333; padding-bottom:10px; margin-top:0;">👋 ABOUT AKHIL STUDIO</h2>
+  <div class="about-text">
+    <p><strong>Hey, I'm Akhil!</strong> Welcome to <span class="about-highlight">Akhil Studio 446</span> – The World of Instant Entertainment! 🌍</p>
+    <p>Looking for a daily dose of fun, knowledge, and inspiration? This channel is designed for <strong>all ages and all audiences!</strong> We bring you a non-stop supply of trending, comedic, educational, and heartwarming Ultra-Short Videos (Shorts).</p>
+    
+    <div style="background:#111; padding:15px; border-left:4px solid #00f3ff; margin:15px 0; border-radius:5px;">
+        <p style="margin:0; color:#00f3ff; font-weight:bold; font-size:18px;">🚀 OUR MISSION:</p>
+        <p style="margin:5px 0 0 0; color:white;">To hit the massive <strong>200 Million Subscriber</strong> family with your love and support!</p>
+    </div>
+
+    <p style="text-align:center; color:#ffd700; font-weight:bold; font-size:18px; margin-top:15px;">✨ Like and Subscribe Now!</p>
+  </div>
+</div>
+
+<div class="rgb-box"><h2>🏆 500 Million Subscribers Goal</h2></div>
+
+<div class="rgb-box" style="border-color:#ffd700;">
+    <h3 style="margin:0; color:#ffd700;">🔒 FACE REVEAL</h3>
+    <p style="margin:5px 0 0 0; color:#ddd;">Face Reveal will happen after crossing 500 Million Subscribers!</p>
+</div>
+
+<div class="rgb-box box-updates">
+  <h3>📢 UPDATES FROM AKHIL STUDIO</h3>
+  <ul>
+    <li>⚔️ Video: Netherite Hunt (Sunday)</li>
+    <li>🎨 Art: Jagannath Drawing</li>
+    <li>🚀 200M Mission Started!</li>
+  </ul>
+</div>
+
+<div class="rgb-box">
+    <h2 style="color:#ffd700; text-shadow:0 0 10px #ff0000; margin-top:0;">🔥 MY TOP 5 VIRAL SHORTS</h2>
+    <p style="color:#ccc;">Watch my best moments!</p>
+    
+    <div class="shorts-grid">
+        <div class="short-frame">
+            <iframe src="https://www.youtube.com/embed/7oQFX76GyH4" allowfullscreen></iframe>
+        </div>
+        <div class="short-frame">
+            <iframe src="https://www.youtube.com/embed/MGyTqR7ZHJE" allowfullscreen></iframe>
+        </div>
+        <div class="short-frame">
+            <iframe src="https://www.youtube.com/embed/8YNCqq42JyU" allowfullscreen></iframe>
+        </div>
+        <div class="short-frame">
+            <iframe src="https://www.youtube.com/embed/bTpjCKXcH7U" allowfullscreen></iframe>
+        </div>
+        <div class="short-frame">
+            <iframe src="https://www.youtube.com/embed/oMyBybNVilE" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<div class="rgb-box">OFFICIAL PARTNER: <strong>@GAPSHAPMITHILA</strong><small>⚡ POWERED BY GAMING ⚡</small></div>
+
+<div class="rgb-box" style="text-align:center;">
+  <h3>📞 Business / Contact</h3>
+  <p style="color:#ccc;">For Business/Paid Promotions, please contact us at:</p>
+  <p style="font-size:18px; color:#ffd700; font-weight:bold; word-break: break-all;">akhilstudio446@gmail.com</p>
+  <button class="copy-btn" onclick="window.location.href='mailto:akhilstudio446@gmail.com'">💬 Send Email</button>
+</div>
+
+<div class="game-wrapper">
+  <h2 style="color:#32cd32;">🐍 SNAKE GAME</h2>
+  <p>SCORE: <span id="scoreVal" style="color:#ffd700;">0</span> | HIGH SCORE: <span id="highScoreVal" style="color:#00f3ff;">0</span></p>
+  <div class="game-frame">
+    <canvas id="gc" width="300" height="300"></canvas>
+  </div>  
+
+  <div class="mobile-controls">
+    <button class="mobile-btn" onclick="setDirection('UP')">⬆ UP</button>
+    <button class="mobile-btn" onclick="setDirection('DOWN')">⬇ DOWN</button>
+    <button class="mobile-btn" onclick="setDirection('LEFT')">⬅ LEFT</button>
+    <button class="mobile-btn" onclick="setDirection('RIGHT')">➡ RIGHT</button>
+  </div>
+  <button class="start-btn" onclick="startGame()">▶ START GAME</button>
+  <p style="font-size:12px;color:gray;">(Arrow Keys or Mobile Buttons)</p>
+</div>
+
+<div class="thank-you">THANK YOU FOR VISITING 🥰</div>
+
+<footer class="site-footer">
+    <div class="footer-links">
+        <a href="#">Home</a> | <a href="#">Privacy Policy</a> | <a href="#">Terms</a> | <a href="#">Contact</a>
+    </div>
+    <div style="font-size: 11px; color: #555; max-width: 600px; margin: 15px auto;">
+        <strong>Disclaimer:</strong> This website is a fan portfolio. Akhil Studio 446 is not affiliated with Mojang/Microsoft.
+    </div>
+    <p style="color:#fff; font-weight:bold; margin-top:15px;">© 2025 The Akhil Studio 446. All Rights Reserved.</p>
+</footer>
+
+<script>
+function initFloaters(){
+  const wrap=document.getElementById('animLayer');
+  const icons=['💎','⛏️','🛡️','🪨','⬛'];
+  for(let i=0;i<20;i++){
+    let el=document.createElement('div');
+    el.className='floater';
+    el.innerText=icons[Math.floor(Math.random()*icons.length)];
+    el.style.left=Math.random()*90+'vw';
+    el.style.animationDuration=(Math.random()*5+8)+'s';
+    wrap.appendChild(el);
+  }
+}
+initFloaters();
+
+function toggleMusic(){ 
+  var audio=document.getElementById("bgMusic"); 
+  if(audio.paused) audio.play().catch(e=>alert("Tap again to play!")); 
+  else audio.pause(); 
+}
+
+/* SNAKE GAME LOGIC */
+var canvas=document.getElementById("gc"); var ctx=canvas.getContext("2d");
+var gameLoop; var box=15,tiles=20; var snake=[],apple={x:15,y:15}; var xv=0,yv=0,score=0;
+var highScore = localStorage.getItem("snakeHighScore") || 0;
+document.getElementById("scoreVal").innerText="0";
+document.getElementById("highScoreVal").innerText=highScore;
+
+function startGame(){
+  if(gameLoop) clearInterval(gameLoop);
+  snake=[{x:10,y:10}]; score=0; xv=1; yv=0;
+  document.getElementById("scoreVal").innerText="0";
+  gameLoop=setInterval(update,100);
+}
+
+function update(){
+  var headX=snake[0].x+xv; var headY=snake[0].y+yv;
+  if(headX<0) headX=tiles-1; if(headX>tiles-1) headX=0; if(headY<0) headY=tiles-1; if(headY>tiles-1) headY=0;
+  for(var i=0;i<snake.length;i++){ 
+    if(snake[i].x==headX && snake[i].y==headY){ 
+      if(score > highScore){
+        highScore = score;
+        localStorage.setItem("snakeHighScore", highScore);
+        document.getElementById("highScoreVal").innerText=highScore;
+        alert("🎉 NEW HIGH SCORE: " + score);
+      } else { alert("Game Over! Score: " + score); }
+      snake=[{x:10,y:10}]; score=0; document.getElementById("scoreVal").innerText="0"; return; 
+    } 
+  }
+  snake.unshift({x:headX,y:headY});
+  if(headX==apple.x && headY==apple.y){ score++; document.getElementById("scoreVal").innerText=score; apple.x=Math.floor(Math.random()*tiles); apple.y=Math.floor(Math.random()*tiles); } else { snake.pop(); }
+  ctx.fillStyle="#080808"; ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="#32cd32"; for(var i=0;i<snake.length;i++){ ctx.fillRect(snake[i].x*box,snake[i].y*box,box-2,box-2);}
+  ctx.fillStyle="red"; ctx.fillRect(apple.x*box,apple.y*box,box-2,box-2);
+}
+
+// SCROLL FIX
+document.addEventListener("keydown", e=>{
+  if([37, 38, 39, 40].includes(e.keyCode)) { e.preventDefault(); }
+  if(e.keyCode==37 && xv!=1){xv=-1; yv=0;}
+  if(e.keyCode==38 && yv!=1){xv=0; yv=-1;}
+  if(e.keyCode==39 && xv!=-1){xv=1; yv=0;}
+  if(e.keyCode==40 && yv!=-1){xv=0; yv=1;}
+});
+canvas.addEventListener("click", e=>{ if(xv==0 && yv==0) xv=1; });
+function setDirection(dir){
+  if(dir=='UP' && yv!=1){xv=0; yv=-1;}
+  if(dir=='DOWN' && yv!=-1){xv=0; yv=1;}
+  if(dir=='LEFT' && xv!=1){xv=-1; yv=0;}
+  if(dir=='RIGHT' && xv!=-1){xv=1; yv=0;}
+}
+</script>
+</body>
+</html>
